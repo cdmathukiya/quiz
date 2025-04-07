@@ -1,0 +1,91 @@
+{
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BNr12iwI.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/Pages/Home-Array.vue": {
+    "file": "assets/Home-Array-B7W6ySlE.js",
+    "name": "Home-Array",
+    "src": "resources/js/Pages/Home-Array.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Home-Array-AGIHShxi.css"
+    ]
+  },
+  "resources/js/Pages/Home.vue": {
+    "file": "assets/Home-BAEND0BS.js",
+    "name": "Home",
+    "src": "resources/js/Pages/Home.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Home-DSbCMXI-.css"
+    ]
+  },
+  "resources/js/Pages/Product/create.vue": {
+    "file": "assets/create-YWEmlTen.js",
+    "name": "create",
+    "src": "resources/js/Pages/Product/create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Product/list.vue": {
+    "file": "assets/list-B7txo0l5.js",
+    "name": "list",
+    "src": "resources/js/Pages/Product/list.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Result.vue": {
+    "file": "assets/Result-BA7T8zH-.js",
+    "name": "Result",
+    "src": "resources/js/Pages/Result.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/Result-Q9XOojRu.css"
+    ]
+  },
+  "resources/js/Pages/home1.vue": {
+    "file": "assets/home1-DsjTphG7.js",
+    "name": "home1",
+    "src": "resources/js/Pages/home1.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DdidFn3K.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Home-Array.vue",
+      "resources/js/Pages/Home.vue",
+      "resources/js/Pages/Product/create.vue",
+      "resources/js/Pages/Product/list.vue",
+      "resources/js/Pages/Result.vue",
+      "resources/js/Pages/home1.vue"
+    ]
+  }
+}
