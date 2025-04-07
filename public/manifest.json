@@ -1,0 +1,20 @@
+{
+    "name": "Quizz",
+    "short_name": "Quizz",
+    "start_url": "/?source=pwa",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "description": "This Quize is develop by tutorial-tools.com",
+    "scope": "/",
+    "id": "/?source=pwa",
+    "form_factor": ["desktop", "mobile"],
+    "display_override": ["window-controls-overlay"],
+    "icons": [
+        {
+            "src": "/images/icon-light.svg",
+            "sizes": "370x370",
+            "type": "image/png"
+        }
+    ]
+}
