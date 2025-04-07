@@ -49,7 +49,7 @@ export default {
         }, 1000);
 
         // Show celebration effects based on score
-        if (this.score >= 4) {
+        if (this.score >= 3) {
             this.launchConfetti();
         }
     },

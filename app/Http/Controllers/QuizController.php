@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Helpers\QuizHelper;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,8 +10,12 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $questions = Question::with('options')->inRandomOrder()->limit(5)->get();
+        $questions = QuizHelper::getQuestions()->shuffle()->take(5);
+        return Inertia::render('Home-Array', [
+            'questions' => $questions
+        ]);
 
+        $questions = Question::with('options')->inRandomOrder()->limit(5)->get();
         return Inertia::render('Home', [
             'questions' => $questions
         ]);
@@ -32,10 +36,11 @@ class QuizController extends Controller
         return redirect()->route('quiz.result')->with('score', $score);
     }
 
-    public function result()
+    public function result(Request $request)
     {
+        $score = $request->get('score');
         return Inertia::render('Result', [
-            'score' => session('score')
+            'score' => session('score') ?? $score
         ]);
     }
 }
