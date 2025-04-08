@@ -8,9 +8,13 @@ use Inertia\Inertia;
 
 class QuizController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $questions = QuizHelper::getQuestions()->shuffle()->take(5);
+        $type = $request->get('type', 'easy');
+        $questions = QuizHelper::getQuestions()
+            ->where('type', $type)
+            ->random(3);
+
         return Inertia::render('Home-Array', [
             'questions' => $questions
         ]);

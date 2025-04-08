@@ -3,6 +3,24 @@
     <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-6">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 Laravel Quiz Challenge</h1>
+
+            <!-- Difficulty Selector -->
+            <div class="flex justify-center mb-10">
+                <button
+                    v-for="level in ['easy', 'medium', 'hard']"
+                    :key="level"
+                    @click="selectDifficulty(level)"
+                    class="px-5 py-2 rounded-full text-white font-semibold capitalize shadow-md transition hover:scale-105"
+                    :class="{
+                        'bg-green-500 hover:bg-green-600': level === 'easy',
+                        'bg-yellow-500 hover:bg-yellow-600': level === 'medium',
+                        'bg-red-500 hover:bg-red-600': level === 'hard'
+                    }"
+                >
+                    {{ level }}
+                </button>
+            </div>
+
             <form @submit.prevent="submitQuiz" class="space-y-8">
                 <div
                     v-for="(question, i) in questions"
@@ -99,7 +117,10 @@ export default {
                     this.deferredPrompt = null;
                 });
             }
-        }
+        },
+        selectDifficulty(level) {
+            this.$inertia.get('/', { type: level });
+        },
     }
 };
 </script>
