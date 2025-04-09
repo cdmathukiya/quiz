@@ -15,16 +15,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use function Neosurf\format_currency;
 use Neosurf\Responses\AuthResponse;
 use Neosurf\Services\ClientService;
+
+use function Neosurf\format_currency;
 
 class ClientController extends Controller
 {
     public function __construct(
         private readonly ClientService $clientService
-    ) {
-    }
+    ) {}
 
     public function updateProfilePhoto(UpdateUserPhotoFormRequest $request)
     {
@@ -75,7 +75,7 @@ class ClientController extends Controller
 
             return response()->json($clientToken);
         } catch (\Exception $exception) {
-            if (403 === $exception->getCode()) {
+            if ($exception->getCode() === 403) {
                 return new JsonResponse([
                     'message' => __('messages.has_pending_request'),
                 ], 403);

@@ -12,6 +12,8 @@ class QuizHelper
                 'options' => ['Framework', 'CMS', 'Library', 'Theme'],
                 'answer' => 'Framework',
                 'type' => 'easy',
+                'reference' => '',
+                'status' => 1,
             ],
             [
                 'question' => 'Which command is used to create a new Laravel project?',

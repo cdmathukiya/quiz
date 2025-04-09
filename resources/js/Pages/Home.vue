@@ -2,20 +2,49 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-6">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 Laravel Quiz Challenge</h1>
+            <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 अवेक्षक चैलेंज</h1>
+            <div class="flex flex-col items-center mb-12 space-y-4">
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Select Difficulty Level</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button
+                        v-for="level in ['easy', 'medium', 'hard']"
+                        :key="level"
+                        @click="selectDifficulty(level)"
+                        @mouseover="hoveredLevel = level"
+                        @mouseleave="hoveredLevel = null"
+                        class="relative px-6 py-3 rounded-xl font-medium capitalize transition-all duration-300 transform overflow-hidden"
+                        :class="{
+                            'bg-emerald-100 text-emerald-800 border-2 border-emerald-300 hover:border-emerald-500': level === 'easy',
+                            'bg-amber-100 text-amber-800 border-2 border-amber-300 hover:border-amber-500': level === 'medium',
+                            'bg-rose-100 text-rose-800 border-2 border-rose-300 hover:border-rose-500': level === 'hard',
+                            'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty === level,
+                            'opacity-90 hover:opacity-100': selectedDifficulty !== level
+                        }"
+                    >
+                        <span class="relative z-10 flex items-center">
+                            <span class="mr-2">
+                                <span v-if="level === 'easy'">😊</span>
+                                <span v-if="level === 'medium'">🤔</span>
+                                <span v-if="level === 'hard'">🧠</span>
+                            </span>
+                            {{ level }}
+                        </span>
+                        <span
+                            class="absolute inset-0 bg-white opacity-0 hover:opacity-20 transition-opacity duration-300"
+                            :class="{
+                                'bg-emerald-200': level === 'easy',
+                                'bg-amber-200': level === 'medium',
+                                'bg-rose-200': level === 'hard'
+                            }"
+                        ></span>
+                    </button>
+                </div>
+            </div>
             <form @submit.prevent="submitQuiz" class="space-y-8">
-                <div
-                    v-for="question in questions"
-                    :key="question.id"
-                    class="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
-                >
+                <div v-for="question in questions" :key="question.id" class="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ question.question }}</h2>
                     <div class="space-y-3">
-                        <label
-                            v-for="option in question.options"
-                            :key="option.id"
-                            class="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-indigo-50 transition"
-                        >
+                        <label v-for="option in question.options" :key="option.id" class="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
                             <input
                                 type="radio"
                                 :name="'q_' + question.id"
@@ -47,14 +76,25 @@ export default {
     props: ['questions'],
     data() {
         return {
-            answers: {}
+            answers: {},
+            hoveredLevel: null,
+            selectedDifficulty: null
         };
     },
+
     methods: {
         submitQuiz() {
             router.post('/submit', {
                 answers: this.answers
             });
+
+        },
+        selectDifficulty(level) {
+
+            this.selectedDifficulty = level;
+            setTimeout(() => {
+                this.$inertia.get('/', { type: level })
+             }, 500);
         }
     }
 };

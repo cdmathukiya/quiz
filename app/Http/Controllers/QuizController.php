@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Helpers\QuizHelper;
@@ -11,17 +12,23 @@ class QuizController extends Controller
     public function index(Request $request)
     {
         $type = $request->get('type', 'easy');
-        $questions = QuizHelper::getQuestions()
+        // $questions = QuizHelper::getQuestions()
+        //     ->where('type', $type)
+        //     ->random(3);
+
+        // return Inertia::render('Home-Array', [
+        //     'questions' => $questions
+        // ]);
+
+        $questions = Question::query()
+            ->with('options')
             ->where('type', $type)
-            ->random(3);
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-        return Inertia::render('Home-Array', [
-            'questions' => $questions
-        ]);
-
-        $questions = Question::with('options')->inRandomOrder()->limit(5)->get();
         return Inertia::render('Home', [
-            'questions' => $questions
+            'questions' => $questions,
         ]);
     }
 
@@ -29,22 +36,33 @@ class QuizController extends Controller
     {
         $data = $request->input('answers'); // [question_id => option_id, ...]
         $score = 0;
+        $questions = [];
 
         foreach ($data as $questionId => $optionId) {
             $option = \App\Models\Option::where('id', $optionId)->where('is_correct', true)->first();
+            $question = Question::find($questionId);
             if ($option) {
                 $score++;
             }
+            if ($question) {
+                $questions[] = $question;
+            }
         }
 
-        return redirect()->route('quiz.result')->with('score', $score);
+        return Inertia::render('Result', [
+            'score' => session('score') ?? $score,
+            'questions' => $questions,
+        ]);
+
+        // return redirect()->route('quiz.result')->with('score', $score);
     }
 
     public function result(Request $request)
     {
         $score = $request->get('score');
+
         return Inertia::render('Result', [
-            'score' => session('score') ?? $score
+            'score' => session('score') ?? $score,
         ]);
     }
 }

@@ -14,7 +14,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
