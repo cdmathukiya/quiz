@@ -15,19 +15,23 @@
                  >
                      Try Again
                  </a>
-                 <p class="text-sm text-gray-500 mt-4">
+                 <p class="text-sm text-gray-500 my-5">
                      Redirecting to quiz page in <span class="font-semibold text-indigo-600">{{ countdown }}</span> seconds...
                  </p>
-             </div> 
+                 <!-- Animated Answer Button -->
+                 <button @click="scrollToAnswers" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 animate-bounce">
+                     See Answers
+                 </button>
+             </div>
          </div>
 
-        <div class="items-center w-full max-w-4xl mx-auto justify-center space-y-6">
-            <div class="bg-white rounded-3xl shadow-md p-6 overflow-hidden">
+        <div ref="answerSection" class="flex items-center w-full max-w-4xl mx-auto justify-center space-y-6 ">
+            <div class="bg-white rounded-3xl shadow-md p-6 overflow-hidden mb-5">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Quiz Review</h2>
                 <p class="text-gray-600 mb-6">Here are the correct answers for your reference</p>
-                
+
                 <div class="space-y-6">
-                    <div 
+                    <div
                         v-for="(question, index) in questions"
                         :key="question.id"
                         class="border-l-4 border-indigo-300 pl-5 py-2 hover:border-indigo-500 transition-colors duration-200"
@@ -79,12 +83,13 @@ export default {
                 clearInterval(interval);
                 this.$inertia.visit('/');
             }
-        }, 1000);
+        }, 4000);
 
         // Show celebration effects based on score
         if (this.score >= 2) {
             this.launchConfetti();
         }
+        this.answerSection = this.$refs.answerSection
     },
     methods: {
         launchConfetti() {
@@ -129,6 +134,9 @@ export default {
             }
 
             animate();
+        },
+        scrollToAnswers() {
+            this.answerSection.scrollIntoView({ behavior: 'smooth' })
         }
     }
 };
