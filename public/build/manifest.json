@@ -4,12 +4,12 @@
     "name": "_plugin-vue_export-helper"
   },
   "resources/css/app.css": {
-    "file": "assets/app-nt6EANte.css",
+    "file": "assets/app-CTxskacG.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/Pages/Home-Array.vue": {
-    "file": "assets/Home-Array-JSfEeDti.js",
+    "file": "assets/Home-Array-B-3ZI3EP.js",
     "name": "Home-Array",
     "src": "resources/js/Pages/Home-Array.vue",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-CGSfl-SD.js",
+    "file": "assets/Home-DVIw_5SB.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
@@ -53,7 +53,7 @@
     ]
   },
   "resources/js/Pages/Result.vue": {
-    "file": "assets/Result-wrHj57n8.js",
+    "file": "assets/Result-By4OMEAH.js",
     "name": "Result",
     "src": "resources/js/Pages/Result.vue",
     "isDynamicEntry": true,
@@ -62,11 +62,11 @@
       "resources/js/app.js"
     ],
     "css": [
-      "assets/Result-CnzOhhGF.css"
+      "assets/Result-BQ2UTJH0.css"
     ]
   },
   "resources/js/Pages/home1.vue": {
-    "file": "assets/home1-8beqUT9e.js",
+    "file": "assets/home1-CRYzFEr8.js",
     "name": "home1",
     "src": "resources/js/Pages/home1.vue",
     "isDynamicEntry": true,
@@ -75,7 +75,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BZDUclcC.js",
+    "file": "assets/app-j-ZtixOS.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
