@@ -93,7 +93,10 @@ export default {
 
             this.selectedDifficulty = level;
             setTimeout(() => {
-                this.$inertia.get('/', { type: level })
+                this.$inertia.get('/', { type: level },{
+                    preserveState: true,
+                    preserveScroll: true,
+                })
              }, 500);
         }
     }

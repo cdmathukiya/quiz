@@ -53,16 +53,5 @@ class QuizController extends Controller
             'score' => session('score') ?? $score,
             'questions' => $questions,
         ]);
-
-        // return redirect()->route('quiz.result')->with('score', $score);
-    }
-
-    public function result(Request $request)
-    {
-        $score = $request->get('score');
-
-        return Inertia::render('Result', [
-            'score' => session('score') ?? $score,
-        ]);
     }
 }
