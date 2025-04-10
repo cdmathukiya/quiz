@@ -82,7 +82,7 @@ export default {
     },
     mounted() {
         window.addEventListener('beforeunload', this.handleBeforeUnload);
-        
+
         const interval = setInterval(() => {
             if (this.countdown > 1) {
                 this.countdown--;
@@ -90,7 +90,7 @@ export default {
                 clearInterval(interval);
                 this.route('quiz.home')
             }
-        }, 4000);
+        }, 1000);
 
         if (this.score >= 2) {
             this.launchConfetti();
