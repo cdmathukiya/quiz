@@ -3,10 +3,20 @@
     <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-6">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 अवेक्षक चैलेंज</h1>
-            <div class="flex flex-col items-center mb-12 space-y-4">
-                <h3 class="text-lg font-medium text-gray-700 mb-2">Select Difficulty Level</h3>
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button
+            <div v-if="showmodel">
+                <div 
+                
+                class="fixed inset-0 bg-blue-50 bg-opacity-75 flex items-center justify-center p-4 z-50"
+                @click.self="showModal = false"
+                >
+                <!-- Modal Content -->
+                <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 animate-scale-in">
+                    <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 अवेक्षक चैलेंज</h1>
+                    
+                    <div class="flex flex-col items-center mb-12 space-y-4">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Select Difficulty Level</h3>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button
                         v-for="level in ['easy', 'medium', 'hard']"
                         :key="level"
                         @click="selectDifficulty(level)"
@@ -20,24 +30,42 @@
                             'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty === level,
                             'opacity-90 hover:opacity-100': selectedDifficulty !== level
                         }"
-                    >
+                        >
                         <span class="relative z-10 flex items-center">
                             <span class="mr-2">
-                                <span v-if="level === 'easy'">😊</span>
-                                <span v-if="level === 'medium'">🤔</span>
-                                <span v-if="level === 'hard'">🧠</span>
+                            <span v-if="level === 'easy'">😊</span>
+                            <span v-if="level === 'medium'">🤔</span>
+                            <span v-if="level === 'hard'">🧠</span>
                             </span>
                             {{ level }}
                         </span>
                         <span
                             class="absolute inset-0 bg-white opacity-0 hover:opacity-20 transition-opacity duration-300"
                             :class="{
-                                'bg-emerald-200': level === 'easy',
-                                'bg-amber-200': level === 'medium',
-                                'bg-rose-200': level === 'hard'
+                            'bg-emerald-200': level === 'easy',
+                            'bg-amber-200': level === 'medium',
+                            'bg-rose-200': level === 'hard'
                             }"
                         ></span>
+                        </button>
+                        <p class="text-center text-gray-700 text-base md:text-lg font-semibold leading-relaxed max-w-2xl mx-auto mb-6">
+                            Ready for a challenge? Pick your difficulty  Easy, Medium, or Hard  and let the quiz begin!
+                        </p>
+
+                    </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-center space-x-4">
+                    <button
+                        @click="startChallenge"
+                        :disabled="!selectedDifficulty"
+                        class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium disabled:bg-indigo-300 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors"
+                    >
+                        Start Game
                     </button>
+                    </div>
+                </div>
                 </div>
             </div>
             <form @submit.prevent="submitQuiz" class="space-y-8">
@@ -47,6 +75,7 @@
                         <label v-for="option in question.options" :key="option.id" class="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
                             <input
                                 type="radio"
+                                required
                                 :name="'q_' + question.id"
                                 :value="option.id"
                                 v-model="answers[question.id]"
@@ -70,7 +99,7 @@
 </template>
 
 <script>
-import { router } from '@inertiajs/vue3';
+import { router} from '@inertiajs/vue3';
 
 export default {
     props: ['questions'],
@@ -78,28 +107,61 @@ export default {
         return {
             answers: {},
             hoveredLevel: null,
-            selectedDifficulty: null
+            selectedDifficulty: null,
+            allowNavigation: false,
+            showmodel: true,
         };
     },
-
+    mounted() {
+        window.addEventListener('beforeunload', this.handleBeforeUnload);
+        if (window.location.search) {
+            this.showmodel = false;
+        } else {
+            this.showmodel = true;
+        }
+    },
     methods: {
+        handleBeforeUnload(event) {
+            if (!this.allowNavigation) {
+                event.preventDefault();
+            }
+        },
+        tryAgain() {
+            this.allowNavigation = true;
+            this.$inertia.visit(route('quiz.home'));
+        },
+        startChallenge() {
+            this.showmodel = false
+        },
         submitQuiz() {
+            this.allowNavigation = true;
             router.post('/submit', {
                 answers: this.answers
             });
-
         },
         selectDifficulty(level) {
-
             this.selectedDifficulty = level;
+            this.allowNavigation = true;
             setTimeout(() => {
-                this.$inertia.get('/', { type: level },{
+                this.$inertia.get('/', { type: level }, {
                     preserveState: true,
                     preserveScroll: true,
-                })
-             }, 500);
+                    onFinish: () => {
+                        this.allowNavigation = false; 
+                    }
+                });
+            }, 500);
         }
+    },
+    beforeUnmount() {
+        window.removeEventListener('beforeunload', this.handleBeforeUnload);
+    },
+    watch: {
+    '$route.params.type'(type) {
+      this.type = type
+      console.log('User ID changed to:', type)
     }
+  }
 };
 </script>
 

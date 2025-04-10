@@ -9,12 +9,12 @@
                  <p class="text-lg text-gray-600 mb-6">
                      {{ feedback }}
                  </p>
-                 <a
-                     href="/"
+                 <Link
+                     :href="route('quiz.home')"
                      class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105"
                  >
                      Try Again
-                 </a>
+                 </Link>
                  <p class="text-sm text-gray-500 my-5">
                      Redirecting to quiz page in <span class="font-semibold text-indigo-600">{{ countdown }}</span> seconds...
                  </p>
@@ -60,38 +60,56 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/vue3';
 export default {
+    components: {
+        Link
+    },
     props: ['questions', 'score'],
     data() {
         return {
-            countdown: 10
+            countdown: 120,
+            allowNavigation: false
         };
     },
     computed: {
         feedback() {
-            if (this.score === 5) return 'Perfect score! You know your Laravel! 🚀';
+            if (this.score === 5) return 'Excllent score! 🚀';
             if (this.score >= 4) return 'Great job! Almost there! 💪';
             if (this.score >= 3) return 'Nice try! Keep practicing. 🙌';
             return 'Don’t worry, try again and learn more! 📚';
         }
     },
     mounted() {
+        window.addEventListener('beforeunload', this.handleBeforeUnload);
+        
         const interval = setInterval(() => {
             if (this.countdown > 1) {
                 this.countdown--;
             } else {
                 clearInterval(interval);
-                this.$inertia.visit('/');
+                this.route('quiz.home')
             }
         }, 4000);
 
-        // Show celebration effects based on score
         if (this.score >= 2) {
             this.launchConfetti();
         }
-        this.answerSection = this.$refs.answerSection
+        this.answerSection = this.$refs.answerSection;
+    },
+    beforeUnmount() {
+        window.removeEventListener('beforeunload', this.handleBeforeUnload);
     },
     methods: {
+        handleBeforeUnload(event) {
+            if (!this.allowNavigation) {
+                event.preventDefault();
+            }
+        },
+        tryAgain() {
+            this.allowNavigation = true;
+            this.$inertia.visit(route('quiz.home'));
+        },
         launchConfetti() {
             const canvas = this.$refs.confettiCanvas;
             const ctx = canvas.getContext('2d');
@@ -136,7 +154,7 @@ export default {
             animate();
         },
         scrollToAnswers() {
-            this.answerSection.scrollIntoView({ behavior: 'smooth' })
+            this.answerSection.scrollIntoView({ behavior: 'smooth' });
         }
     }
 };

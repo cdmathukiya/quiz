@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\QuizHelper;
-use App\Models\Question;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Question;
+use App\Helpers\QuizHelper;
+use Illuminate\Http\Request;
+use Laravel\Prompts\Support\Result;
 
 class QuizController extends Controller
 {
@@ -49,9 +50,25 @@ class QuizController extends Controller
             }
         }
 
-        return Inertia::render('Result', [
+        // return Inertia::render('Result', [
+        //     'score' => session('score') ?? $score,
+        //     'questions' => $questions,
+        // ]);
+
+        return redirect()->route('quiz.result')->with([
             'score' => session('score') ?? $score,
             'questions' => $questions,
         ]);
     }
-}
+
+    public function result(Request $request)
+    {
+        $score = $request->session()->get('score');
+        $questions = $request->session()->get('questions');
+    
+        return Inertia::render('Result', [
+            'score' => $score,
+            'questions' => $questions,
+        ]);
+    }
+}    
