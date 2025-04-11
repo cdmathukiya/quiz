@@ -9,9 +9,9 @@
                  <p class="text-lg text-gray-600 mb-6">
                      {{ feedback }}
                  </p>
-                 <Link :href="route('quiz.home')" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
+                 <button @click="tryAgain" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
                      Try Again
-                 </Link>
+                 </button>
                  <p class="text-sm text-gray-500 my-5">
                      Redirecting to quiz page in <span class="font-semibold text-indigo-600">{{ countdown }}</span> seconds...
                  </p>
@@ -67,7 +67,8 @@ export default {
     data() {
         return {
             countdown: 120,
-            allowNavigation: false
+            allowNavigation: false,
+            interval: null,
         };
     },
     computed: {
@@ -79,18 +80,18 @@ export default {
         }
     },
     mounted() {
-        console.log(this.score);
-        console.log(this.questions);
         if (this.score == null && this.questions == null) {
             this.$inertia.visit(route('quiz.home'));
             return;
         }
         window.addEventListener('beforeunload', this.handleBeforeUnload);
-        const interval = setInterval(() => {
+        this.interval = setInterval(() => {
+            console.log(this.countdown);
             if (this.countdown > 1) {
                 this.countdown--;
             } else {
-                clearInterval(interval);
+                console.log('return back auto');
+                clearInterval(this.interval);
                 this.$inertia.visit(route('quiz.home'));
             }
         }, 1000);
@@ -111,6 +112,7 @@ export default {
         },
         tryAgain() {
             this.allowNavigation = true;
+            clearInterval(this.interval);
             this.$inertia.visit(route('quiz.home'));
         },
         launchConfetti() {

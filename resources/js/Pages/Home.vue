@@ -141,10 +141,6 @@ export default {
                 event.preventDefault();
             }
         },
-        tryAgain() {
-            this.allowNavigation = true;
-            this.$inertia.visit(route('quiz.home'));
-        },
         submitQuiz() {
             this.allowNavigation = true;
             router.post('/submit', {
@@ -158,21 +154,19 @@ export default {
         },
         startChallenge() {
             this.selectDifficulty(this.selectedDifficulty);
-            setTimeout(() => {
-                this.$inertia.get('/', { type: this.selectedDifficulty }, {
-                    preserveState: true,
-                    preserveScroll: true,
-                    onFinish: () => {
-                        this.showmodel = false;
-                        this.allowNavigation = false;
-                    }
-                });
-            }, 100);
+            this.$inertia.get('/', { type: this.selectedDifficulty }, {
+                preserveState: true,
+                preserveScroll: true,
+                onFinish: () => {
+                    this.showmodel = false;
+                    this.allowNavigation = false;
+                }
+            });
         },
     },
     beforeUnmount() {
         window.removeEventListener('beforeunload', this.handleBeforeUnload);
-    },    
+    },
 };
 </script>
 
