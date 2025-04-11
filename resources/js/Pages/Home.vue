@@ -75,17 +75,6 @@
                 </div>
             </div>
             <form @submit.prevent="submitQuiz" class="space-y-8">
-                <div class="d-none hidden max-w-md mx-auto my-8 bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                    <label for="name" class="block text-lg font-medium text-gray-700 mb-2">Enter your name:</label>
-                    <input
-                        v-model="name"
-                        type="text"
-                        id="name"
-                        placeholder="Your full name"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        required
-                    />
-                </div>
                 <div v-for="question in questions" :key="question.id"
                     class="bg-white rounded-3xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ question.question }}</h2>

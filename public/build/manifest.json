@@ -9,7 +9,7 @@
     "isEntry": true
   },
   "resources/js/Pages/Home-Array.vue": {
-    "file": "assets/Home-Array-CNzV6IS2.js",
+    "file": "assets/Home-Array-Dy3ZK9j0.js",
     "name": "Home-Array",
     "src": "resources/js/Pages/Home-Array.vue",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-DZCMxDv3.js",
+    "file": "assets/Home-CQbqiPfU.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
@@ -31,7 +31,7 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Home-cu75J5dX.css"
+      "assets/Home-C7YhsevY.css"
     ]
   },
   "resources/js/Pages/Product/create.vue": {
@@ -53,7 +53,7 @@
     ]
   },
   "resources/js/Pages/Result.vue": {
-    "file": "assets/Result-C-VJ6GlH.js",
+    "file": "assets/Result-hjGYTCpj.js",
     "name": "Result",
     "src": "resources/js/Pages/Result.vue",
     "isDynamicEntry": true,
@@ -66,7 +66,7 @@
     ]
   },
   "resources/js/Pages/home1.vue": {
-    "file": "assets/home1-C-lJuTOY.js",
+    "file": "assets/home1-BiTzShGy.js",
     "name": "home1",
     "src": "resources/js/Pages/home1.vue",
     "isDynamicEntry": true,
@@ -75,7 +75,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-C-fvWQ6S.js",
+    "file": "assets/app-D8atdtkv.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
