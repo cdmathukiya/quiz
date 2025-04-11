@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use App\Models\Question;
-use App\Helpers\QuizHelper;
 use Illuminate\Http\Request;
-use Laravel\Prompts\Support\Result;
+use Inertia\Inertia;
 
 class QuizController extends Controller
 {
@@ -35,6 +33,16 @@ class QuizController extends Controller
 
     public function submit(Request $request)
     {
+        $data = $request->validate(
+            [
+                'answers' => 'required|array|min:5',
+            ],
+            [
+                'answers.required' => 'Please fill all questions',
+                'answers.min' => 'Please attempt all questions',
+            ]
+        );
+
         $data = $request->input('answers'); // [question_id => option_id, ...]
         $score = 0;
         $questions = [];
@@ -57,7 +65,7 @@ class QuizController extends Controller
 
         return redirect()->route('quiz.result')->with([
             'score' => session('score') ?? $score,
-            'questions' => $questions,
+            'questions' => session('questions') ?? $questions,
         ]);
     }
 
@@ -65,10 +73,10 @@ class QuizController extends Controller
     {
         $score = $request->session()->get('score');
         $questions = $request->session()->get('questions');
-    
+
         return Inertia::render('Result', [
             'score' => $score,
             'questions' => $questions,
         ]);
     }
-}    
+}

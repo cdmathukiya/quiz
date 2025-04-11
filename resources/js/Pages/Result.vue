@@ -9,21 +9,23 @@
                  <p class="text-lg text-gray-600 mb-6">
                      {{ feedback }}
                  </p>
-                 <Link
-                     :href="route('quiz.home')"
-                     class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105"
-                 >
+                 <Link :href="route('quiz.home')" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
                      Try Again
                  </Link>
                  <p class="text-sm text-gray-500 my-5">
                      Redirecting to quiz page in <span class="font-semibold text-indigo-600">{{ countdown }}</span> seconds...
                  </p>
                  <!-- Animated Answer Button -->
-                 <button @click="scrollToAnswers" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 animate-bounce">
-                     See Answers
-                 </button>
-             </div>
-         </div>
+                 <div class="flex justify-center">
+                    <button @click="scrollToAnswers" class="flex items-center justify-center mt-4 px-8 py-3 bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 animate-bounce">
+                        <span class="mr-2 font-medium">See Answers</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <div ref="answerSection" class="flex items-center w-full max-w-4xl mx-auto justify-center space-y-6 ">
             <div class="bg-white rounded-3xl shadow-md p-6 overflow-hidden mb-5">
@@ -31,11 +33,7 @@
                 <p class="text-gray-600 mb-6">Here are the correct answers for your reference</p>
 
                 <div class="space-y-6">
-                    <div
-                        v-for="(question, index) in questions"
-                        :key="question.id"
-                        class="border-l-4 border-indigo-300 pl-5 py-2 hover:border-indigo-500 transition-colors duration-200"
-                    >
+                    <div v-for="(question, index) in questions" :key="question.id" class="border-l-4 border-indigo-300 pl-5 py-2 hover:border-indigo-500 transition-colors duration-200">
                         <div class="flex items-start">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-800 font-bold mr-4 mt-1 flex-shrink-0">
                                 {{ index + 1 }}
@@ -81,18 +79,21 @@ export default {
         }
     },
     mounted() {
+        if (this.score == null && this.questions == null) {
+            this.$inertia.visit(route('quiz.home'));
+            return;
+        }
         window.addEventListener('beforeunload', this.handleBeforeUnload);
-
         const interval = setInterval(() => {
             if (this.countdown > 1) {
                 this.countdown--;
             } else {
                 clearInterval(interval);
-                this.route('quiz.home')
+                this.$inertia.visit(route('quiz.home'));
             }
         }, 1000);
 
-        if (this.score >= 2) {
+        if (this.score >= 4) {
             this.launchConfetti();
         }
         this.answerSection = this.$refs.answerSection;
