@@ -79,6 +79,8 @@ export default {
         }
     },
     mounted() {
+        console.log(this.score);
+        console.log(this.questions);
         if (this.score == null && this.questions == null) {
             this.$inertia.visit(route('quiz.home'));
             return;
