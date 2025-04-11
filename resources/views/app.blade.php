@@ -7,6 +7,8 @@
     @vite('resources/js/app.js')
     @routes
     <link rel="manifest" href="{{ asset('manifest.json') }}" />
+    <link rel="icon" href="{{asset('images/icon-light.svg')}}" type="image/x-icon" >
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/icon-light.svg')}}" >
     @inertiaHead
 </head>
 <body>
