@@ -122,6 +122,7 @@ export default {
         window.addEventListener('beforeunload', this.handleBeforeUnload);
         const params = new URLSearchParams(window.location.search);
         let type = params.get('type');
+        this.selectedDifficulty = type;
         const validTypes = ['easy', 'medium', 'hard'];
         if (validTypes.includes(type)) {
             this.showmodel = false
@@ -147,7 +148,8 @@ export default {
         submitQuiz() {
             this.allowNavigation = true;
             router.post('/submit', {
-                answers: this.answers
+                answers: this.answers,
+                type: this.selectedDifficulty,
             });
         },
         selectDifficulty(level) {

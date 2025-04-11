@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Services\ResultService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class QuizController extends Controller
 {
+    public function __construct(public ResultService $resultService){}
     public function index(Request $request)
     {
         $type = $request->get('type', 'easy');
@@ -36,6 +38,7 @@ class QuizController extends Controller
         $data = $request->validate(
             [
                 'answers' => 'required|array|min:5',
+                'type' => 'required|string',
             ],
             [
                 'answers.required' => 'Please fill all questions',
@@ -57,6 +60,11 @@ class QuizController extends Controller
                 $questions[] = $question;
             }
         }
+        $result['result'] = $score;
+        $result['ip_address'] = $request->ip();
+        $result['type'] = $request->type;
+        $this->resultService->viewCount($result);
+        
 
         // return Inertia::render('Result', [
         //     'score' => session('score') ?? $score,
