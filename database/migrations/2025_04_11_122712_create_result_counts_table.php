@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('type');
             $table->integer('result')->default(0);
             $table->string('ip_address');

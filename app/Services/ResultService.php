@@ -10,7 +10,6 @@ class ResultService
 
     public function viewCount($data)
     {
-        Result::query()
-                ->create($data);
+        Result::query()->create($data);
     }
 }

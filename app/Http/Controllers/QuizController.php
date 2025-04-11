@@ -37,6 +37,7 @@ class QuizController extends Controller
     {
         $data = $request->validate(
             [
+                'name' => 'nullable',
                 'answers' => 'required|array|min:5',
                 'type' => 'required|string',
             ],
@@ -63,8 +64,9 @@ class QuizController extends Controller
         $result['result'] = $score;
         $result['ip_address'] = $request->ip();
         $result['type'] = $request->type;
+        $result['name'] = $request->name;
         $this->resultService->viewCount($result);
-        
+
 
         // return Inertia::render('Result', [
         //     'score' => session('score') ?? $score,
@@ -72,6 +74,7 @@ class QuizController extends Controller
         // ]);
 
         return redirect()->route('quiz.result')->with([
+            'name' => session('name') ?? $request->name,
             'score' => session('score') ?? $score,
             'questions' => session('questions') ?? $questions,
         ]);
@@ -83,6 +86,7 @@ class QuizController extends Controller
         $questions = $request->session()->get('questions');
 
         return Inertia::render('Result', [
+            'name' => $request->session()->get('name'),
             'score' => $score,
             'questions' => $questions,
         ]);

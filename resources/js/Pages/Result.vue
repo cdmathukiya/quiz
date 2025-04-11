@@ -3,6 +3,7 @@
         <div class="min-h-screen flex items-center justify-center  px-4 relative overflow-hidden mb-5">
              <canvas ref="confettiCanvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
              <div class="bg-white rounded-3xl p-10 max-w-md w-full text-center animate-fade-in-up z-10">
+                 <h4 class="text-4xl font-bold text-indigo-700 mb-4">{{name}}</h4>
                  <h1 class="text-4xl font-bold text-indigo-700 mb-4">🎉 Your Quiz Result</h1>
                  <p class="text-xl text-gray-700 mb-2">You scored</p>
                  <div class="text-7xl font-extrabold text-purple-600 mb-4 fireworks">{{ score }}/5</div>
@@ -63,7 +64,7 @@ export default {
     components: {
         Link
     },
-    props: ['questions', 'score'],
+    props: ['questions', 'score', 'name'],
     data() {
         return {
             countdown: 120,
