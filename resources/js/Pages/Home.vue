@@ -22,32 +22,40 @@
                         <div class="flex flex-col items-center mb-12 space-y-4">
                             <h3 class="text-lg font-medium text-gray-700 mb-2">Select Difficulty Level</h3>
                             <div class="flex flex-wrap justify-center gap-3">
-                                <button v-for="level in ['easy', 'medium', 'hard']" :key="level"
-                                    @click="selectDifficulty(level)" @mouseover="hoveredLevel = level"
+                                <button
+                                    v-for="level in levels"
+                                    :key="level.value"
+                                    @click="selectDifficulty(level.value)"
+                                    @mouseover="hoveredLevel = level.value"
                                     @mouseleave="hoveredLevel = null"
                                     class="relative px-6 py-3 rounded-xl font-medium capitalize transition-all duration-300 transform overflow-hidden"
                                     :class="{
-                                        'bg-emerald-100 text-emerald-800 border-2 border-emerald-300 hover:border-emerald-500': level === 'easy',
-                                        'bg-amber-100 text-amber-800 border-2 border-amber-300 hover:border-amber-500': level === 'medium',
-                                        'bg-rose-100 text-rose-800 border-2 border-rose-300 hover:border-rose-500': level === 'hard',
-                                        'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty === level,
-                                        'opacity-90 hover:opacity-100': selectedDifficulty !== level
-                                    }">
+                                    'bg-emerald-100 text-emerald-800 border-2 border-emerald-300 hover:border-emerald-500': level.value === 'easy',
+                                    'bg-amber-100 text-amber-800 border-2 border-amber-300 hover:border-amber-500': level.value === 'medium',
+                                    'bg-rose-100 text-rose-800 border-2 border-rose-300 hover:border-rose-500': level.value === 'hard',
+                                    'bg-blue-100 text-blue-800 border-2 border-blue-300 hover:border-blue-500': level.value === 'riddle',
+                                    'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty?.value === level.value,
+                                    'opacity-90 hover:opacity-100': selectedDifficulty?.value !== level.value
+                                    }"
+                                >
                                     <span class="relative z-10 flex items-center">
-                                        <span class="mr-2">
-                                            <span v-if="level === 'easy'">😊</span>
-                                            <span v-if="level === 'medium'">🤔</span>
-                                            <span v-if="level === 'hard'">🧠</span>
-                                        </span>
-                                        {{ level }}
+                                    <span class="mr-2">
+                                        <span v-if="level.value === 'easy'">😊</span>
+                                        <span v-if="level.value === 'medium'">🤔</span>
+                                        <span v-if="level.value === 'hard'">🧠</span>
+                                        <span v-if="level.value === 'riddle'">🤔</span>
+                                    </span>
+                                    {{ level.label }}
                                     </span>
                                     <span
-                                        class="absolute inset-0 bg-white opacity-0 hover:opacity-20 transition-opacity duration-300"
-                                        :class="{
-                                            'bg-emerald-200': level === 'easy',
-                                            'bg-amber-200': level === 'medium',
-                                            'bg-rose-200': level === 'hard'
-                                        }"></span>
+                                    class="absolute inset-0 opacity-0 hover:opacity-20 transition-opacity duration-300"
+                                    :class="{
+                                        'bg-emerald-200': level.value === 'easy',
+                                        'bg-amber-200': level.value === 'medium',
+                                        'bg-rose-200': level.value === 'hard',
+                                        'bg-blue-200': level.value === 'riddle'
+                                    }"
+                                    ></span>
                                 </button>
                                 <p class="text-center text-gray-700 text-base md:text-lg font-semibold leading-relaxed max-w-2xl mx-auto mb-6">
                                     Ready for a challenge? Pick your difficulty Easy, Medium, or Hard and let the quiz
@@ -102,12 +110,24 @@ export default {
             selectedDifficulty: null,
             allowNavigation: false,
             showmodel: true,
+            levels: [
+                { value: 'easy', label: 'Easy' },
+                { value: 'medium', label: 'Medium' },
+                { value: 'hard', label: 'Hard' },
+                { value: 'riddle', label: 'ઉખાણું' }, // Riddle in Gujarati
+            ],
         };
     },
     mounted() {
         window.addEventListener('beforeunload', this.handleBeforeUnload);
-
-        window.location.search ? this.showmodel = false : this.showmodel = true;
+        const params = new URLSearchParams(window.location.search);
+        let type = params.get('type');
+        const validTypes = ['easy', 'medium', 'hard'];
+        if (validTypes.includes(type)) {
+            this.showmodel = false
+        } else {
+            this.showmodel = true;
+        }
 
         if (this.questions == null) {
             this.$inertia.visit(route('quiz.home'));

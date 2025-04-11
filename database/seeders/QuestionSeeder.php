@@ -30,7 +30,7 @@ class QuestionSeeder extends Seeder
                 'answer' => $row[5] ?? null,
                 'reference' => $row[6] ?? null,
                 'type' => strtolower($row[7]),
-                'rank' => $row[8] ?? null,
+                'marks' => $row[8] ?? null,
                 'status' => 1,
             ]);
 

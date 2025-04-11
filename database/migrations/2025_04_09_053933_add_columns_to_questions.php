@@ -16,7 +16,7 @@ return new class extends Migration
                 $table->string('answer')->nullable();
                 $table->string('type')->nullable();
                 $table->string('reference')->nullable();
-                $table->unsignedInteger('rank')->nullable();
+                $table->unsignedInteger('marks')->nullable();
                 $table->tinyInteger('status')->default(1)->comment('0=>Inactive, 1=>Active');
             });
         });
