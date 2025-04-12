@@ -34,8 +34,8 @@
                                     'bg-amber-100 text-amber-800 border-2 border-amber-300 hover:border-amber-500': level.value === 'medium',
                                     'bg-rose-100 text-rose-800 border-2 border-rose-300 hover:border-rose-500': level.value === 'hard',
                                     'bg-blue-100 text-blue-800 border-2 border-blue-300 hover:border-blue-500': level.value === 'riddle',
-                                    'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty?.value === level.value,
-                                    'opacity-90 hover:opacity-100': selectedDifficulty?.value !== level.value
+                                    'ring-2 ring-offset-2 ring-indigo-400 scale-105': selectedDifficulty === level.value,
+                                    'opacity-90 hover:opacity-100': selectedDifficulty !== level.value
                                     }"
                                 >
                                     <span class="relative z-10 flex items-center">
