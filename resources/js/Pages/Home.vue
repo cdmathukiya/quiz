@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-6">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 अवेक्षक चैलेंज
+            <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠 संचालक चैलेंज
             </h1>
             <div v-if="errors.answers"
                 class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
@@ -18,7 +18,7 @@
                 <div class="fixed inset-0 bg-blue-50 flex items-center justify-center p-4 z-50">
                     <!-- Modal Content -->
                     <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 animate-scale-in">
-                        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠अवेक्षक चैलेंज</h1>
+                        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-fade-in-up">🧠संचालक चैलेंज</h1>
                         <div class="flex flex-col items-center mb-12 space-y-4">
                             <h3 class="text-lg font-medium text-gray-700 mb-2">Select Difficulty Level</h3>
                             <div class="flex flex-wrap justify-center gap-3">
